@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:ethiofood/ui/views/detail/meal_detail_screen.dart';
 import 'package:ethiofood/ui/views/home/home_page.dart';
 import 'package:ethiofood/ui/views/meal/category_meal_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -37,7 +38,8 @@ class EthioFood extends StatelessWidget {
 
       ),
       routes: {
-        '/categories': (cxt) => CategoryMealScreen(),
+        '/categories': (_) => CategoryMealScreen(),
+        '/meal-detail': (_) => MealDetailScreen()
       },
 
     );
