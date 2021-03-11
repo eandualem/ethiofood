@@ -1,8 +1,9 @@
 import 'package:ethiofood/core/models/dummy_data.dart';
-import 'package:ethiofood/ui/views/home/category_item.dart';
+import 'package:ethiofood/ui/views/category/category_item.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -13,6 +14,6 @@ class CategoriesScreen extends StatelessWidget {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20
       ),
-      children: DUMMY_CATEGORIES.map((e) =>  CategoryItem(e.title, e.color)).toList(),);
+      children: DUMMY_CATEGORIES.map((e) =>  CategoryItem(e.id, e.title, e.color)).toList(),);
   }
 }

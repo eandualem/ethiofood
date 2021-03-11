@@ -1,14 +1,22 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:ethiofood/ui/views/home/home_page.dart';
+import 'package:ethiofood/ui/views/meal/category_meal_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(EthioFood());
-}
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => EthioFood(), // Wrap your app
+  ),
+);
 
 class EthioFood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder, // Add
       title: "EthioFood",
       home: HomePage(),
       theme: ThemeData(
@@ -28,6 +36,9 @@ class EthioFood extends StatelessWidget {
         )
 
       ),
+      routes: {
+        '/categories': (cxt) => CategoryMealScreen(),
+      },
 
     );
   }
