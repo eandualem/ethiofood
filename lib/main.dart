@@ -1,4 +1,6 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:ethiofood/core/models/dummy_data.dart';
+import 'package:ethiofood/core/models/meal.dart';
 import 'package:ethiofood/ui/views/category/filters_screen.dart';
 import 'package:ethiofood/ui/views/detail/meal_detail_screen.dart';
 import 'package:ethiofood/ui/views/home/home_page.dart';
@@ -13,7 +15,35 @@ void main() => runApp(
   ),
 );
 
-class EthioFood extends StatelessWidget {
+class EthioFood extends StatefulWidget {
+  @override
+  _EthioFoodState createState() => _EthioFoodState();
+}
+
+class _EthioFoodState extends State<EthioFood> {
+
+  Map<String, bool> _filters = {
+    "gluten_free": false,
+    "vegetarian": false,
+    "vegan": false,
+    "lactose_free": false };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+
+  void _setFilters(Map<String, bool> filtersData ){
+    setState(() {
+      _filters = filtersData;
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if(_filters["gluten_free"] && !meal.isGlutenFree) return false;
+        if(_filters["vegetarian"] && !meal.isVegetarian) return false;
+        if(_filters["vegan"] && !meal.isVegan) return false;
+        if(_filters["lactose_free"] && !meal.isLactoseFree) return false;
+        return true;
+      }).toList();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,9 +69,9 @@ class EthioFood extends StatelessWidget {
 
       ),
       routes: {
-        '/categories': (_) => CategoryMealScreen(),
+        '/categories': (_) => CategoryMealScreen(_availableMeals),
         '/meal-detail': (_) => MealDetailScreen(),
-        FiltersScreen.routeName: (_) => FiltersScreen()
+        FiltersScreen.routeName: (_) => FiltersScreen(_filters, _setFilters)
       },
 
     );
